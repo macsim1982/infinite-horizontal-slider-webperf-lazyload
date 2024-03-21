@@ -1,0 +1,18 @@
+{
+  "name": "instagram-slider-with-video",
+  "version": "1.0.0",
+  "description": "A vanilla javascript slider using intersection observer to async load javascript needed to start the slider. when the slider enter viewport, all js is imported with await and the current dom is replaced with the content of lit-html template. User can interact and start to slide between images. This is jsut a poc for now. This project use rematrix and lit-html as dependencies",
+  "scripts": {
+    "start": "parcel index.html --open",
+    "build": "parcel build index.html"
+  },
+  "dependencies": {
+    "lit-html": "1.4.1",
+    "rematrix": "0.7.2"
+  },
+  "devDependencies": {
+    "@parcel/core": "^2.11.0",
+    "parcel": "^2.11.0"
+  },
+  "keywords": []
+}

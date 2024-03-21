@@ -1,0 +1,88 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.nav {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20%;
+
+  /* Hide the text. */
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.prev {
+  left: 0;
+  z-index: 1;
+}
+
+.next {
+  right: 0;
+  z-index: 2;
+}
+
+.indicators {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  background-color: rgba(255,255,255, 1);
+  height: 4px;
+}
+
+.indicator {
+  position: absolute;
+  width: 33%;
+  height: 100%;
+  background-color: #484848;
+  left: 0;
+  top: 2px;
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+.slider-wrapper {
+  position: relative;
+  overflow: hidden;
+  margin: 20px;
+
+  /* No selectable text */
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.slider {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: 5 / 7;
+  perspective: 100px;
+}
+
+.item {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  transition: transform 0.3s ease;
+  transform: translateX(0);
+  transform-origin: bottom;
+  will-change: transform;
+}
+
+.slide:nth-child(1) {
+  transform: translateX(-100%) scale(0.8);
+}
+.slide:nth-child(3) {
+  transform: translateX(100%) scale(0.8);
+}
