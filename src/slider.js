@@ -1,8 +1,8 @@
 import { render } from "lit-html";
 import { repeat } from "lit-html/directives/repeat";
+import { onTouchSwipe } from "vanilla-touchswipe";
 import { multiply, translateX, fromString, toString } from "rematrix";
 import { tplSlide } from "./templates.js";
-import { onTouchSwipe } from "./touch.js";
 
 let sliderObserver;
 

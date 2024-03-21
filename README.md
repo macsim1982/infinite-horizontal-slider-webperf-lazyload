@@ -3,7 +3,7 @@
   <img alt="Version" src="https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000" />
 </p>
 
-> A vanilla javascript slider using intersection observer to async load javascript needed to start the slider. when the slider enter viewport, all js is imported with await and the current dom is replaced with the content of lit-html template. User can interact and start to slide between images. This is jsut a poc for now.
+> A vanilla javascript slider using intersection observer to async load javascript needed to start the slider. when the slider enter viewport, all js is imported with await and the current dom is replaced with the content of lit-html template. User can interact and start to slide between images. This is just a poc for now.
 
 ### 🏠 [Homepage](index.html)
 
