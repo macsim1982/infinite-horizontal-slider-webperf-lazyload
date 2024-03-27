@@ -26,9 +26,8 @@ npm run start
 * Website: http://macsim.fr
 * Github: [@macsim1982](https://github.com/macsim1982)
 
-## Show your support
-
-Give a ⭐️ if this project helped you!
+## Demo (mobile only for the moment)
+Demo for mobile or by using devtools in Chrome to emulate mobile (https://infinite-horizontal-slider-webperf-lazyload.vercel.app/)
 
 ***
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
