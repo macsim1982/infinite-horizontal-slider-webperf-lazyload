@@ -1,9 +1,9 @@
 <h1 align="center">Welcome to Infinite horizontal slider - webperf lazyload 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
 </p>
 
-> A vanilla javascript slider using intersection observer to async load javascript needed to start the slider. when the slider enter viewport, all js is imported with await and the current dom is replaced with the content of lit-html template. User can interact and start to slide between images. This is just a poc for now.
+> A vanilla JavaScript slider that lazy-loads its JavaScript when each slider enters the viewport. On intersection, the slider module is dynamically imported, the current DOM is replaced with a lit-html template, and users can swipe or navigate between images. This is a proof of concept.
 
 ### 🏠 [Homepage](index.html)
 
@@ -19,6 +19,12 @@ npm install
 npm run start
 ```
 
+## How lazy loading works
+
+- [`src/index.js`](src/index.js) registers an `IntersectionObserver` on each `.js-slider-wrapper`.
+- When a slider enters the viewport, Parcel loads [`src/slider.js`](src/slider.js) via dynamic `import()`.
+- Only then are lit-html, rematrix, and swipe handling initialized for that slider.
+
 ## Author
 
 👤 **Maxime Lerouge**
@@ -28,6 +34,3 @@ npm run start
 
 ## Demo (mobile only for the moment)
 Demo for mobile or by using devtools in Chrome to emulate mobile (https://infinite-horizontal-slider-webperf-lazyload.vercel.app/)
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_

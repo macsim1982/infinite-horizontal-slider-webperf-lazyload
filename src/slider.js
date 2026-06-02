@@ -1,13 +1,17 @@
 import { render } from "lit-html";
 import { repeat } from "lit-html/directives/repeat";
-import { onTouchSwipe } from "vanilla-touchswipe";
 import { multiply, translateX, fromString, toString } from "rematrix";
+import { onTouchSwipe } from "./swipe.js";
 import { tplSlide } from "./templates.js";
 
-let sliderObserver;
+function getSlidePosition(index, total) {
+  if (index === 0) return "prev";
+  if (index === total - 1) return "next";
+  return "current";
+}
 
 class Slider {
-  constructor($wrapper, props) {
+  constructor($wrapper, slides) {
     this.matrix = new Map();
     this.$wrapper = $wrapper;
     this.$el = $wrapper.querySelector(".js-slider");
@@ -15,16 +19,37 @@ class Slider {
     this.$indicator = $wrapper.querySelector(".js-indicator");
     this.$elNext = $wrapper.querySelector(".js-next");
     this.$elPrev = $wrapper.querySelector(".js-prev");
-    this.delta = 1; // Be careful if this is change - update css .slide:nth-child(n) if delta = 2  we will have 5 slides in dom instead of 3
+    this.delta = 1;
     this.maxSlidesInDom = this.delta * 2 + 1;
-    this.originalSlides = props.slides;
+    this.originalSlides = slides;
+    this.destroyed = false;
+
+    this.$wrapper.style.setProperty("--slide-count", String(slides.length));
+    this.$wrapper.style.setProperty(
+      "--max-slides-in-dom",
+      String(this.maxSlidesInDom)
+    );
+
+    if (slides.length === 1) {
+      this.$indicators.setAttribute("aria-hidden", "true");
+      this.$indicators.hidden = true;
+    }
 
     this.indicatorsWidth = this.$indicators.offsetWidth;
-    this.indicatorWidth = this.$indicator.offsetWidth;
+    this.indicatorWidth = this.$indicators.offsetWidth / slides.length;
 
-    this.slides = this.getSlides(this.originalSlides);
+    this.slides = this.getSlides(slides);
     this.current = this.setRealCurrent(0);
     this.slidesInDom = this.getSlidesInDom(this.current);
+
+    this.onNextClick = this.gotoNext.bind(this);
+    this.onPrevClick = this.gotoPrev.bind(this);
+    this.onKeyDown = this.handleKeyDown.bind(this);
+    this.onTouchStart = this.touchStart.bind(this);
+    this.onTouchMove = this.touchMove.bind(this);
+    this.onTouchCancel = this.touchCancel.bind(this);
+    this.onSwipePrev = this.gotoPrev.bind(this);
+    this.onSwipeNext = this.gotoNext.bind(this);
 
     this.bindEvents();
   }
@@ -38,19 +63,14 @@ class Slider {
   }
 
   getSlides(slides) {
-    while (slides.length < this.maxSlidesInDom) {
-      slides = slides.concat(slides);
+    let expandedSlides = [...slides];
+    while (expandedSlides.length < this.maxSlidesInDom) {
+      expandedSlides = expandedSlides.concat(expandedSlides);
     }
-    return slides.map((e, index) => ({ src: e, index: index }));
+    return expandedSlides.map((src, index) => ({ src, index }));
   }
 
   getSlidesInDom(start = 0) {
-    console.log(
-      "getSlidesInDom",
-      this.current,
-      this.delta,
-      this.maxSlidesInDom
-    );
     const rest = this.maxSlidesInDom - (this.slides.length - start);
     let slides = this.slides.slice(start, this.maxSlidesInDom + start);
     if (rest > 0) {
@@ -58,16 +78,37 @@ class Slider {
     }
     this.slidesInDom = slides;
 
+    this.updateIndicator();
+
+    render(
+      repeat(
+        this.slidesInDom,
+        (slide) => slide.index,
+        (slide, index) =>
+          tplSlide({
+            src: slide.src,
+            position: getSlidePosition(index, this.slidesInDom.length),
+            alt: `Slide ${this.getCurrentIndex() + 1} of ${this.originalSlides.length}`,
+          })
+      ),
+      this.$el
+    );
+
+    return slides;
+  }
+
+  updateIndicator() {
+    if (this.originalSlides.length <= 1) {
+      this.$indicator.style.transform = "translateX(0)";
+      return;
+    }
+
     const indicatorLeft =
       ((this.indicatorsWidth - this.indicatorWidth) /
         (this.originalSlides.length - 1)) *
       this.getCurrentIndex();
 
-    this.$indicator.style.transform = "translateX(" + indicatorLeft + "px)";
-    render(
-      repeat(this.slidesInDom, (i) => i.index, tplSlide),
-      this.$el
-    );
+    this.$indicator.style.transform = `translateX(${indicatorLeft}px)`;
   }
 
   getCurrentIndex() {
@@ -90,6 +131,9 @@ class Slider {
   }
 
   goto(val) {
+    if (this.originalSlides.length <= 1) {
+      return;
+    }
     this.current = this.setCurrent(val);
     this.getSlidesInDom(this.current);
     this.touchCancel();
@@ -103,13 +147,13 @@ class Slider {
 
   touchStart() {
     this.matrix = new Map();
-    [...this.$el.querySelectorAll(".item")].forEach($el => {
+    [...this.$el.querySelectorAll(".item")].forEach(($el) => {
       this.matrix.set($el, fromString(getComputedStyle($el).transform));
     });
   }
 
   touchMove(delta) {
-    [...this.$el.querySelectorAll(".item")].forEach($el => {
+    [...this.$el.querySelectorAll(".item")].forEach(($el) => {
       if (this.matrix.get($el)) {
         const matrix = [this.matrix.get($el), translateX(delta)].reduce(multiply);
         $el.style.transform = toString(matrix);
@@ -118,46 +162,64 @@ class Slider {
     });
   }
 
-  bindEvents() {
-    this.$elNext.addEventListener("click", this.gotoNext.bind(this));
-    this.$elPrev.addEventListener("click", this.gotoPrev.bind(this));
+  handleKeyDown(event) {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      this.gotoPrev();
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      this.gotoNext();
+    }
+  }
 
-    onTouchSwipe(this.$wrapper, {
-      left: this.gotoPrev.bind(this),
-      right: this.gotoNext.bind(this),
-      start: this.touchStart.bind(this),
-      move: this.touchMove.bind(this),
-      end: this.touchCancel.bind(this),
-      cancel: this.touchCancel.bind(this),
+  bindEvents() {
+    this.$elNext.addEventListener("click", this.onNextClick);
+    this.$elPrev.addEventListener("click", this.onPrevClick);
+    this.$wrapper.addEventListener("keydown", this.onKeyDown);
+
+    this.removeSwipe = onTouchSwipe(this.$wrapper, {
+      left: this.onSwipePrev,
+      right: this.onSwipeNext,
+      start: this.onTouchStart,
+      move: this.onTouchMove,
+      end: this.onTouchCancel,
+      cancel: this.onTouchCancel,
     });
+  }
+
+  destroy() {
+    if (this.destroyed) {
+      return;
+    }
+
+    this.destroyed = true;
+    this.$elNext.removeEventListener("click", this.onNextClick);
+    this.$elPrev.removeEventListener("click", this.onPrevClick);
+    this.$wrapper.removeEventListener("keydown", this.onKeyDown);
+    this.removeSwipe?.();
+    render("", this.$el);
   }
 }
 
-export function sliderInit($wrapper = document) {
-  sliderObserver && sliderObserver.disconnect();
+export function createSlider($wrapper) {
+  let slides;
 
-  sliderObserver = new IntersectionObserver(
-    (entries, observer) => {
-      for (let entry of entries) {
-        if (entry.intersectionRatio > 0) {
-          new Slider(entry.target, {
-            slides: JSON.parse(entry.target.dataset.slides),
-          });
-          observer.unobserve(entry.target);
-
-          console.log("observe this entry", entry);
-        }
-      }
-    },
-    { rootMargin: "0px 0px 0px 0px", threshold: 0 }
-  );
-
-  const $sliders = $wrapper.querySelectorAll(".js-slider-wrapper");
-  if ($sliders.length) {
-      [...$sliders].forEach($slider => {
-        sliderObserver.observe($slider);
-      });
-  } else {
-    console.warn("warn [touch-slider]", "missing element");
+  try {
+    slides = JSON.parse($wrapper.dataset.slides);
+  } catch (error) {
+    console.warn("[slider] invalid data-slides JSON", error);
+    return null;
   }
+
+  if (!Array.isArray(slides)) {
+    console.warn("[slider] data-slides must be a JSON array");
+    return null;
+  }
+
+  if (slides.length === 0) {
+    console.warn("[slider] data-slides is empty");
+    return null;
+  }
+
+  return new Slider($wrapper, slides);
 }
