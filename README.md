@@ -6,9 +6,10 @@ POC d'un slider produit PLP e-commerce : DOM minimal, chunk JS lazy, délégatio
 
 ```
 bootstrap.js (defer, ~1.7 KB)
-  ├── IntersectionObserver — init au viewport
-  ├── Prefetch interaction — touchstart / mousedown sur .js-slider-wrapper
-  └── import('./slider.js') — uniquement à la consommation
+  ├── Desktop — init au survol .js-slider-wrapper (product-tile)
+  ├── Mobile  — IntersectionObserver (init au viewport)
+  ├── Mobile  — prefetch chunk au touchstart (download only, no init)
+  └── import('./slider.js') — à la consommation
 
 slider.js (chunk async, ~20 KB)
   ├── lit-html — rendu 3 slides max
@@ -16,14 +17,14 @@ slider.js (chunk async, ~20 KB)
   └── vanilla-delegate — clic + touch délégués sur document.body
 ```
 
-Au load de la page : **aucun chunk slider**. Seul le bootstrap est téléchargé.
+Au load : **aucun chunk slider**. Sur mobile, le touchstart ne fait que précharger le JS — l'init (calculs layout) reste sur l'IntersectionObserver pour éviter le jank au premier geste.
 
 ## Démos
 
-| Page | Usage |
+| Page | Commande |
 |---|---|
-| [index.html](index.html) | Démo simple — 4 sliders |
-| [stress.html](stress.html) | Stress test — hero 100vh puis ~30 tuiles (2, 6 ou 16 images) |
+| [stress.html](stress.html) | `npm start` (défaut) |
+| [index.html](index.html) | `npm run start:simple` |
 
 **Stress test :** rester sur le hero, ouvrir DevTools → Network → recharger. Constater l'absence du chunk `slider` avant scroll.
 
@@ -38,8 +39,8 @@ npm install
 ## Usage
 
 ```sh
-npm run start          # index.html
-npm run start:stress   # stress.html (case study)
+npm run start          # stress.html (défaut)
+npm run start:simple   # index.html
 npm run build
 ```
 

@@ -5,13 +5,18 @@ let sliderModulePromise = null;
 let observer = null;
 let chunkLoaded = false;
 
+function isDesktop() {
+  return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+}
+
 function updateLoadStatus() {
   const status = document.getElementById("js-load-status");
   if (!status) return;
 
+  const mode = isDesktop() ? "hover" : "viewport";
   status.textContent = chunkLoaded
-    ? "Bootstrap chargé — chunk slider : chargé (1 fetch)"
-    : "Bootstrap chargé — chunk slider : non";
+    ? `Bootstrap chargé (${mode}) — chunk slider : chargé (1 fetch)`
+    : `Bootstrap chargé (${mode}) — chunk slider : non`;
 }
 
 function loadSliderModule() {
@@ -52,8 +57,6 @@ async function activateWrappers(wrappers) {
 
 function initObserver() {
   if (!("IntersectionObserver" in window)) {
-    const fallback = [...document.querySelectorAll(SELECTOR)];
-    if (fallback.length) activateWrappers(fallback);
     return;
   }
 
@@ -67,24 +70,35 @@ function initObserver() {
     { rootMargin: "0px", threshold: 0 }
   );
 
-  observeNewSliders(document);
+  registerSliders(document);
 }
 
-function initIntentPrefetch() {
-  const onIntent = (e) => {
+function initDesktopHover() {
+  document.body.addEventListener("mouseover", (e) => {
     const wrapper = e.target.closest(SELECTOR);
-    if (wrapper) activateWrapper(wrapper);
-  };
+    if (!wrapper) return;
 
-  document.body.addEventListener("touchstart", onIntent, {
-    capture: true,
-    passive: true,
+    const from = e.relatedTarget;
+    if (from && wrapper.contains(from)) return;
+
+    activateWrapper(wrapper);
   });
-  document.body.addEventListener("mousedown", onIntent, { capture: true });
 }
 
-export function observeNewSliders(root = document) {
-  if (!observer) return;
+/** Mobile only: warm the chunk without init (avoids layout work on touchstart) */
+function initChunkPrefetch() {
+  document.body.addEventListener(
+    "touchstart",
+    (e) => {
+      if (isDesktop()) return;
+      if (e.target.closest(SELECTOR)) loadSliderModule();
+    },
+    { capture: true, passive: true }
+  );
+}
+
+export function registerSliders(root = document) {
+  if (isDesktop() || !observer) return;
 
   root.querySelectorAll(SELECTOR).forEach(($el) => {
     if (!$el.getAttribute(READY_ATTR)) {
@@ -93,10 +107,19 @@ export function observeNewSliders(root = document) {
   });
 }
 
-updateLoadStatus();
-initObserver();
-initIntentPrefetch();
+function init() {
+  updateLoadStatus();
+
+  if (isDesktop()) {
+    initDesktopHover();
+  } else {
+    initObserver();
+    initChunkPrefetch();
+  }
+}
+
+init();
 
 document.addEventListener("sliders:observe", (e) => {
-  observeNewSliders(e.detail?.root || document);
+  registerSliders(e.detail?.root || document);
 });

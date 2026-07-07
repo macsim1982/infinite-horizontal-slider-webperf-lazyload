@@ -18,9 +18,9 @@
         d'événements.
       </p>
       <ul class="stress-hero__list">
-        <li>Au load : seul <code>bootstrap.js</code> (non-critical, defer)</li>
-        <li>Chunk slider : chargé à la consommation (viewport ou interaction)</li>
-        <li>Interactions : déléguées sur <code>document.body</code></li>
+        <li>Desktop : init au survol de la tuile produit</li>
+        <li>Mobile : init au viewport (IntersectionObserver)</li>
+        <li>Prefetch mobile : téléchargement du chunk au touchstart, sans init (pas de jank)</li>
       </ul>
       <p class="stress-hero__demo">
         Démo DevTools : onglet Network, filtrer JS, recharger — rester sur cette

@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Vanilla JS PLP slider: bootstrap + lazy chunk on viewport/interaction, event delegation via vanilla-delegate, lit-html rendering, GPU-friendly transforms.",
   "scripts": {
-    "start": "parcel index.html --open",
-    "start:stress": "parcel stress.html --open",
-    "build": "parcel build index.html stress.html"
+    "start": "parcel stress.html --open",
+    "start:simple": "parcel index.html --open",
+    "build": "parcel build stress.html index.html"
   },
   "dependencies": {
     "lit-html": "1.4.1",
