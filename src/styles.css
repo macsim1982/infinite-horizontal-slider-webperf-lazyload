@@ -172,6 +172,8 @@ body {
 
 .stress-tile {
   margin: 0;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
 }
 
 .stress-tile__label {

@@ -6,7 +6,7 @@ POC d'un slider produit PLP e-commerce : DOM minimal, chunk JS lazy, délégatio
 
 ```
 bootstrap.js (defer, ~1.7 KB)
-  ├── Desktop — init au survol .js-slider-wrapper (product-tile)
+  ├── Desktop — init au mouseenter de .js-slider-wrapper (product-tile)
   ├── Mobile  — IntersectionObserver (init au viewport)
   ├── Mobile  — prefetch chunk au touchstart (download only, no init)
   └── import('./slider.js') — à la consommation
@@ -26,7 +26,7 @@ Au load : **aucun chunk slider**. Sur mobile, le touchstart ne fait que préchar
 | [stress.html](stress.html) | `npm start` (défaut) |
 | [index.html](index.html) | `npm run start:simple` |
 
-**Stress test :** rester sur le hero, ouvrir DevTools → Network → recharger. Constater l'absence du chunk `slider` avant scroll.
+**Stress test :** rester sur le hero, ouvrir DevTools → Network → recharger. Constater l'absence du chunk `slider` avant scroll (mobile) ou survol tuile (desktop). Images placeholder en `loading="lazy"` avec dimensions fixes pour limiter le CLS.
 
 Live : [infinite-horizontal-slider-webperf-lazyload.vercel.app](https://infinite-horizontal-slider-webperf-lazyload.vercel.app/)
 
@@ -51,7 +51,7 @@ npm run build
   <div class="js-next nav next">next</div>
   <div class="js-prev nav prev">prev</div>
   <div class="js-slider slider">
-    <img class="item" src="url1" alt="" />
+    <img class="item" src="url1" alt="" loading="lazy" decoding="async" width="500" height="700" />
   </div>
   <div class="js-indicators indicators">
     <div class="js-indicator indicator"></div>

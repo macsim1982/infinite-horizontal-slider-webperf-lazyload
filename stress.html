@@ -18,13 +18,16 @@
         d'événements.
       </p>
       <ul class="stress-hero__list">
-        <li>Desktop : init au survol de la tuile produit</li>
+        <li>Desktop : init au <strong>mouseenter</strong> de la tuile (pas au scroll avec curseur)</li>
         <li>Mobile : init au viewport (IntersectionObserver)</li>
         <li>Prefetch mobile : téléchargement du chunk au touchstart, sans init (pas de jank)</li>
+        <li>Images placeholder : <code>loading="lazy"</code> + dimensions fixes (CWV / CLS)</li>
       </ul>
       <p class="stress-hero__demo">
         Démo DevTools : onglet Network, filtrer JS, recharger — rester sur cette
-        section. Aucun chunk <code>slider</code> ne doit apparaître avant le scroll.
+        section. Aucun chunk <code>slider</code> ne doit apparaître avant le scroll
+        (desktop) ou le survol d'une tuile. Images hors viewport chargées en lazy ;
+        onglet Performance : pas de layout shift grâce aux attributs <code>width</code>/<code>height</code>.
       </p>
       <p id="js-load-status" class="stress-hero__status" aria-live="polite">
         Bootstrap chargé — chunk slider : non

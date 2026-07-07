@@ -1,4 +1,4 @@
-import { buildSlides } from "./picsum-pool.js";
+import { buildSlides, IMG_LAZY_ATTRS } from "./picsum-pool.js";
 
 function createTileMarkup(slides, label) {
   const dataSlides = JSON.stringify(slides).replace(/"/g, "&quot;");
@@ -9,7 +9,7 @@ function createTileMarkup(slides, label) {
         <div class="js-next nav next">next</div>
         <div class="js-prev nav prev">prev</div>
         <div class="js-slider slider">
-          <img class="item" src="${slides[0]}" alt="" />
+          <img class="item" src="${slides[0]}" alt="" ${IMG_LAZY_ATTRS} />
         </div>
         <div class="js-indicators indicators">
           <div class="js-indicator indicator"></div>

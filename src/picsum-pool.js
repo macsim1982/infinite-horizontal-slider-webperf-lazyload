@@ -1,3 +1,9 @@
+export const IMG_WIDTH = 500;
+export const IMG_HEIGHT = 700;
+
+export const IMG_LAZY_ATTRS =
+  'loading="lazy" decoding="async" width="500" height="700"';
+
 /** Valid image IDs from https://picsum.photos/v2/list (guaranteed 200 on GET) */
 export const PICSUM_IDS = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
@@ -8,7 +14,7 @@ export const PICSUM_IDS = [
   93, 94, 95, 96, 98, 99, 100, 101,
 ];
 
-export function imageUrl(id, w = 500, h = 700) {
+export function imageUrl(id, w = IMG_WIDTH, h = IMG_HEIGHT) {
   return `https://picsum.photos/id/${id}/${w}/${h}`;
 }
 

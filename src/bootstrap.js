@@ -73,15 +73,22 @@ function initObserver() {
   registerSliders(document);
 }
 
-function initDesktopHover() {
-  document.body.addEventListener("mouseover", (e) => {
-    const wrapper = e.target.closest(SELECTOR);
-    if (!wrapper) return;
+const HOVER_BOUND_ATTR = "data-hover-bound";
 
-    const from = e.relatedTarget;
-    if (from && wrapper.contains(from)) return;
+function bindDesktopHover($wrapper) {
+  if (!$wrapper || $wrapper.getAttribute(HOVER_BOUND_ATTR)) return;
 
-    activateWrapper(wrapper);
+  $wrapper.setAttribute(HOVER_BOUND_ATTR, "1");
+  $wrapper.addEventListener("mouseenter", () => activateWrapper($wrapper));
+}
+
+export function registerDesktopHovers(root = document) {
+  if (!isDesktop()) return;
+
+  root.querySelectorAll(SELECTOR).forEach(($el) => {
+    if (!$el.getAttribute(READY_ATTR)) {
+      bindDesktopHover($el);
+    }
   });
 }
 
@@ -111,7 +118,7 @@ function init() {
   updateLoadStatus();
 
   if (isDesktop()) {
-    initDesktopHover();
+    registerDesktopHovers(document);
   } else {
     initObserver();
     initChunkPrefetch();
@@ -121,5 +128,7 @@ function init() {
 init();
 
 document.addEventListener("sliders:observe", (e) => {
-  registerSliders(e.detail?.root || document);
+  const root = e.detail?.root || document;
+  registerSliders(root);
+  registerDesktopHovers(root);
 });
