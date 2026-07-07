@@ -86,3 +86,103 @@ body {
 .slide:nth-child(3) {
   transform: translateX(100%) scale(0.8);
 }
+
+/* Stress test page */
+.stress-hero {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 2rem 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 42rem;
+  margin: 0 auto;
+  font-family: system-ui, sans-serif;
+}
+
+.stress-hero h1 {
+  font-size: 1.75rem;
+  margin: 0 0 1rem;
+  line-height: 1.2;
+}
+
+.stress-hero__lead {
+  margin: 0 0 1.25rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+.stress-hero__list {
+  margin: 0 0 1.25rem;
+  padding-left: 1.25rem;
+  line-height: 1.6;
+}
+
+.stress-hero__demo {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  background: #f4f4f4;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.stress-hero__status {
+  margin: 0 0 1rem;
+  padding: 0.5rem 0.75rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  background: #e8f5e9;
+  color: #1b5e20;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.stress-hero__scroll {
+  margin: 2rem 0 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.stress-separator {
+  height: 4px;
+  background: linear-gradient(90deg, #1b5e20, #484848);
+}
+
+.stress-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 0 3rem;
+}
+
+@media (min-width: 768px) {
+  .stress-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .stress-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stress-tile {
+  margin: 0;
+}
+
+.stress-tile__label {
+  margin: 0 0 0.25rem 1.25rem;
+  font-family: system-ui, sans-serif;
+  font-size: 0.7rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.stress-grid .slider-wrapper {
+  margin: 0 12px 20px;
+}

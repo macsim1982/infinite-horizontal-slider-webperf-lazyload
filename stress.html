@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Slider PLP — Stress test</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="src/styles.css" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
+  </head>
+
+  <body>
+    <header class="stress-hero">
+      <h1>Slider PLP performant</h1>
+      <p class="stress-hero__lead">
+        Case study Lacoste / Celio — bootstrap minimal, chunk slider lazy, délégation
+        d'événements.
+      </p>
+      <ul class="stress-hero__list">
+        <li>Au load : seul <code>bootstrap.js</code> (non-critical, defer)</li>
+        <li>Chunk slider : chargé à la consommation (viewport ou interaction)</li>
+        <li>Interactions : déléguées sur <code>document.body</code></li>
+      </ul>
+      <p class="stress-hero__demo">
+        Démo DevTools : onglet Network, filtrer JS, recharger — rester sur cette
+        section. Aucun chunk <code>slider</code> ne doit apparaître avant le scroll.
+      </p>
+      <p id="js-load-status" class="stress-hero__status" aria-live="polite">
+        Bootstrap chargé — chunk slider : non
+      </p>
+      <p class="stress-hero__scroll">↓ Scroller pour atteindre la grille PLP (~30 tuiles)</p>
+    </header>
+
+    <section class="stress-separator" aria-hidden="true"></section>
+
+    <main class="stress-grid" id="js-stress-grid" aria-label="Grille produits stress test">
+      <!-- Tuiles générées par stress-data.js -->
+    </main>
+
+    <script src="src/bootstrap.js" type="module" defer></script>
+    <script src="src/stress-data.js" type="module" defer></script>
+  </body>
+</html>
