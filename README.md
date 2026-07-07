@@ -17,7 +17,23 @@ slider.js (chunk async, ~20 KB)
   └── vanilla-delegate — clic + touch délégués sur document.body
 ```
 
-Au load : **aucun chunk slider**. Sur mobile, le touchstart ne fait que précharger le JS — l'init (calculs layout) reste sur l'IntersectionObserver pour éviter le jank au premier geste.
+Au load : **aucun chunk slider**, et sur `stress.html` **un seul JS** (`bootstrap.js`) — les ~30 tuiles produit sont déjà dans le HTML (générées au build, comme une PLP SFCC server-rendered). Sur mobile, le touchstart ne fait que précharger le JS — l'init (calculs layout) reste sur l'IntersectionObserver pour éviter le jank au premier geste.
+
+## Grille stress (HTML statique)
+
+La page [`stress.html`](stress.html) simule une PLP SFCC : les tuiles sont injectées dans le HTML au **build**, pas au runtime.
+
+```
+src/stress-grid.js          — logique de génération (partagée)
+scripts/generate-stress-grid.mjs — injecte le markup entre marqueurs dans stress.html
+prestart / prebuild         — régénère automatiquement avant dev et prod
+```
+
+En production SFCC, le template ISML serveur remplace ce script de build.
+
+```sh
+npm run generate:stress-grid   # régénérer manuellement
+```
 
 ## Démos
 
@@ -26,7 +42,7 @@ Au load : **aucun chunk slider**. Sur mobile, le touchstart ne fait que préchar
 | [stress.html](stress.html) | `npm start` (défaut) |
 | [index.html](index.html) | `npm run start:simple` |
 
-**Stress test :** rester sur le hero, ouvrir DevTools → Network → recharger. Constater l'absence du chunk `slider` avant scroll (mobile) ou survol tuile (desktop). Images placeholder en `loading="lazy"` avec dimensions fixes pour limiter le CLS.
+**Stress test :** rester sur le hero, ouvrir DevTools → Network → recharger. Constater : un seul petit JS `bootstrap` au load, les tuiles déjà visibles dans le DOM (Elements), absence du chunk `slider` avant scroll (mobile) ou survol tuile (desktop).
 
 Live : [infinite-horizontal-slider-webperf-lazyload.vercel.app](https://infinite-horizontal-slider-webperf-lazyload.vercel.app/)
 

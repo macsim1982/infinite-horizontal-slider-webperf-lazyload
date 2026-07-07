@@ -18,6 +18,7 @@
         d'événements.
       </p>
       <ul class="stress-hero__list">
+        <li>Grille PLP : ~30 tuiles dans le <strong>HTML initial</strong> (simulation SFCC, généré au build)</li>
         <li>Desktop : init au <strong>mouseenter</strong> de la tuile (pas au scroll avec curseur)</li>
         <li>Mobile : init au viewport (IntersectionObserver)</li>
         <li>Prefetch mobile : téléchargement du chunk au touchstart, sans init (pas de jank)</li>
@@ -38,10 +39,460 @@
     <section class="stress-separator" aria-hidden="true"></section>
 
     <main class="stress-grid" id="js-stress-grid" aria-label="Grille produits stress test">
-      <!-- Tuiles générées par stress-data.js -->
+      <!-- stress-grid:start -->
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile légère 1 — 2 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/0/500/700&quot;,&quot;https://picsum.photos/id/1/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/0/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile légère 2 — 3 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/2/500/700&quot;,&quot;https://picsum.photos/id/3/500/700&quot;,&quot;https://picsum.photos/id/4/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/2/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile légère 3 — 2 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/5/500/700&quot;,&quot;https://picsum.photos/id/6/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/5/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile légère 4 — 3 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/7/500/700&quot;,&quot;https://picsum.photos/id/8/500/700&quot;,&quot;https://picsum.photos/id/9/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/7/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile légère 5 — 2 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/10/500/700&quot;,&quot;https://picsum.photos/id/11/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/10/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile légère 6 — 3 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/12/500/700&quot;,&quot;https://picsum.photos/id/13/500/700&quot;,&quot;https://picsum.photos/id/14/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/12/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile légère 7 — 2 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/15/500/700&quot;,&quot;https://picsum.photos/id/16/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/15/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile légère 8 — 3 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/17/500/700&quot;,&quot;https://picsum.photos/id/18/500/700&quot;,&quot;https://picsum.photos/id/19/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/17/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile légère 9 — 2 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/20/500/700&quot;,&quot;https://picsum.photos/id/21/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/20/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile légère 10 — 3 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/22/500/700&quot;,&quot;https://picsum.photos/id/23/500/700&quot;,&quot;https://picsum.photos/id/24/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/22/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile moyenne 1 — 6 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/25/500/700&quot;,&quot;https://picsum.photos/id/26/500/700&quot;,&quot;https://picsum.photos/id/27/500/700&quot;,&quot;https://picsum.photos/id/28/500/700&quot;,&quot;https://picsum.photos/id/29/500/700&quot;,&quot;https://picsum.photos/id/30/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/25/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile moyenne 2 — 6 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/31/500/700&quot;,&quot;https://picsum.photos/id/32/500/700&quot;,&quot;https://picsum.photos/id/33/500/700&quot;,&quot;https://picsum.photos/id/34/500/700&quot;,&quot;https://picsum.photos/id/35/500/700&quot;,&quot;https://picsum.photos/id/36/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/31/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile moyenne 3 — 6 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/37/500/700&quot;,&quot;https://picsum.photos/id/38/500/700&quot;,&quot;https://picsum.photos/id/39/500/700&quot;,&quot;https://picsum.photos/id/40/500/700&quot;,&quot;https://picsum.photos/id/41/500/700&quot;,&quot;https://picsum.photos/id/42/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/37/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile moyenne 4 — 6 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/43/500/700&quot;,&quot;https://picsum.photos/id/44/500/700&quot;,&quot;https://picsum.photos/id/45/500/700&quot;,&quot;https://picsum.photos/id/46/500/700&quot;,&quot;https://picsum.photos/id/47/500/700&quot;,&quot;https://picsum.photos/id/48/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/43/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile moyenne 5 — 6 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/49/500/700&quot;,&quot;https://picsum.photos/id/50/500/700&quot;,&quot;https://picsum.photos/id/51/500/700&quot;,&quot;https://picsum.photos/id/52/500/700&quot;,&quot;https://picsum.photos/id/53/500/700&quot;,&quot;https://picsum.photos/id/54/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/49/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile moyenne 6 — 6 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/55/500/700&quot;,&quot;https://picsum.photos/id/56/500/700&quot;,&quot;https://picsum.photos/id/57/500/700&quot;,&quot;https://picsum.photos/id/58/500/700&quot;,&quot;https://picsum.photos/id/59/500/700&quot;,&quot;https://picsum.photos/id/60/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/55/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile moyenne 7 — 6 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/61/500/700&quot;,&quot;https://picsum.photos/id/62/500/700&quot;,&quot;https://picsum.photos/id/63/500/700&quot;,&quot;https://picsum.photos/id/64/500/700&quot;,&quot;https://picsum.photos/id/65/500/700&quot;,&quot;https://picsum.photos/id/66/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/61/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile moyenne 8 — 6 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/67/500/700&quot;,&quot;https://picsum.photos/id/68/500/700&quot;,&quot;https://picsum.photos/id/69/500/700&quot;,&quot;https://picsum.photos/id/70/500/700&quot;,&quot;https://picsum.photos/id/71/500/700&quot;,&quot;https://picsum.photos/id/72/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/67/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile moyenne 9 — 6 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/73/500/700&quot;,&quot;https://picsum.photos/id/74/500/700&quot;,&quot;https://picsum.photos/id/75/500/700&quot;,&quot;https://picsum.photos/id/76/500/700&quot;,&quot;https://picsum.photos/id/77/500/700&quot;,&quot;https://picsum.photos/id/78/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/73/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile moyenne 10 — 6 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/79/500/700&quot;,&quot;https://picsum.photos/id/80/500/700&quot;,&quot;https://picsum.photos/id/81/500/700&quot;,&quot;https://picsum.photos/id/82/500/700&quot;,&quot;https://picsum.photos/id/83/500/700&quot;,&quot;https://picsum.photos/id/84/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/79/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile stress 1 — 16 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/85/500/700&quot;,&quot;https://picsum.photos/id/87/500/700&quot;,&quot;https://picsum.photos/id/88/500/700&quot;,&quot;https://picsum.photos/id/89/500/700&quot;,&quot;https://picsum.photos/id/90/500/700&quot;,&quot;https://picsum.photos/id/91/500/700&quot;,&quot;https://picsum.photos/id/92/500/700&quot;,&quot;https://picsum.photos/id/93/500/700&quot;,&quot;https://picsum.photos/id/94/500/700&quot;,&quot;https://picsum.photos/id/95/500/700&quot;,&quot;https://picsum.photos/id/96/500/700&quot;,&quot;https://picsum.photos/id/98/500/700&quot;,&quot;https://picsum.photos/id/99/500/700&quot;,&quot;https://picsum.photos/id/100/500/700&quot;,&quot;https://picsum.photos/id/101/500/700&quot;,&quot;https://picsum.photos/id/0/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/85/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile stress 2 — 16 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/1/500/700&quot;,&quot;https://picsum.photos/id/2/500/700&quot;,&quot;https://picsum.photos/id/3/500/700&quot;,&quot;https://picsum.photos/id/4/500/700&quot;,&quot;https://picsum.photos/id/5/500/700&quot;,&quot;https://picsum.photos/id/6/500/700&quot;,&quot;https://picsum.photos/id/7/500/700&quot;,&quot;https://picsum.photos/id/8/500/700&quot;,&quot;https://picsum.photos/id/9/500/700&quot;,&quot;https://picsum.photos/id/10/500/700&quot;,&quot;https://picsum.photos/id/11/500/700&quot;,&quot;https://picsum.photos/id/12/500/700&quot;,&quot;https://picsum.photos/id/13/500/700&quot;,&quot;https://picsum.photos/id/14/500/700&quot;,&quot;https://picsum.photos/id/15/500/700&quot;,&quot;https://picsum.photos/id/16/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/1/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile stress 3 — 16 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/17/500/700&quot;,&quot;https://picsum.photos/id/18/500/700&quot;,&quot;https://picsum.photos/id/19/500/700&quot;,&quot;https://picsum.photos/id/20/500/700&quot;,&quot;https://picsum.photos/id/21/500/700&quot;,&quot;https://picsum.photos/id/22/500/700&quot;,&quot;https://picsum.photos/id/23/500/700&quot;,&quot;https://picsum.photos/id/24/500/700&quot;,&quot;https://picsum.photos/id/25/500/700&quot;,&quot;https://picsum.photos/id/26/500/700&quot;,&quot;https://picsum.photos/id/27/500/700&quot;,&quot;https://picsum.photos/id/28/500/700&quot;,&quot;https://picsum.photos/id/29/500/700&quot;,&quot;https://picsum.photos/id/30/500/700&quot;,&quot;https://picsum.photos/id/31/500/700&quot;,&quot;https://picsum.photos/id/32/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/17/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile stress 4 — 16 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/33/500/700&quot;,&quot;https://picsum.photos/id/34/500/700&quot;,&quot;https://picsum.photos/id/35/500/700&quot;,&quot;https://picsum.photos/id/36/500/700&quot;,&quot;https://picsum.photos/id/37/500/700&quot;,&quot;https://picsum.photos/id/38/500/700&quot;,&quot;https://picsum.photos/id/39/500/700&quot;,&quot;https://picsum.photos/id/40/500/700&quot;,&quot;https://picsum.photos/id/41/500/700&quot;,&quot;https://picsum.photos/id/42/500/700&quot;,&quot;https://picsum.photos/id/43/500/700&quot;,&quot;https://picsum.photos/id/44/500/700&quot;,&quot;https://picsum.photos/id/45/500/700&quot;,&quot;https://picsum.photos/id/46/500/700&quot;,&quot;https://picsum.photos/id/47/500/700&quot;,&quot;https://picsum.photos/id/48/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/33/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile stress 5 — 16 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/49/500/700&quot;,&quot;https://picsum.photos/id/50/500/700&quot;,&quot;https://picsum.photos/id/51/500/700&quot;,&quot;https://picsum.photos/id/52/500/700&quot;,&quot;https://picsum.photos/id/53/500/700&quot;,&quot;https://picsum.photos/id/54/500/700&quot;,&quot;https://picsum.photos/id/55/500/700&quot;,&quot;https://picsum.photos/id/56/500/700&quot;,&quot;https://picsum.photos/id/57/500/700&quot;,&quot;https://picsum.photos/id/58/500/700&quot;,&quot;https://picsum.photos/id/59/500/700&quot;,&quot;https://picsum.photos/id/60/500/700&quot;,&quot;https://picsum.photos/id/61/500/700&quot;,&quot;https://picsum.photos/id/62/500/700&quot;,&quot;https://picsum.photos/id/63/500/700&quot;,&quot;https://picsum.photos/id/64/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/49/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile stress 6 — 16 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/65/500/700&quot;,&quot;https://picsum.photos/id/66/500/700&quot;,&quot;https://picsum.photos/id/67/500/700&quot;,&quot;https://picsum.photos/id/68/500/700&quot;,&quot;https://picsum.photos/id/69/500/700&quot;,&quot;https://picsum.photos/id/70/500/700&quot;,&quot;https://picsum.photos/id/71/500/700&quot;,&quot;https://picsum.photos/id/72/500/700&quot;,&quot;https://picsum.photos/id/73/500/700&quot;,&quot;https://picsum.photos/id/74/500/700&quot;,&quot;https://picsum.photos/id/75/500/700&quot;,&quot;https://picsum.photos/id/76/500/700&quot;,&quot;https://picsum.photos/id/77/500/700&quot;,&quot;https://picsum.photos/id/78/500/700&quot;,&quot;https://picsum.photos/id/79/500/700&quot;,&quot;https://picsum.photos/id/80/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/65/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile stress 7 — 16 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/81/500/700&quot;,&quot;https://picsum.photos/id/82/500/700&quot;,&quot;https://picsum.photos/id/83/500/700&quot;,&quot;https://picsum.photos/id/84/500/700&quot;,&quot;https://picsum.photos/id/85/500/700&quot;,&quot;https://picsum.photos/id/87/500/700&quot;,&quot;https://picsum.photos/id/88/500/700&quot;,&quot;https://picsum.photos/id/89/500/700&quot;,&quot;https://picsum.photos/id/90/500/700&quot;,&quot;https://picsum.photos/id/91/500/700&quot;,&quot;https://picsum.photos/id/92/500/700&quot;,&quot;https://picsum.photos/id/93/500/700&quot;,&quot;https://picsum.photos/id/94/500/700&quot;,&quot;https://picsum.photos/id/95/500/700&quot;,&quot;https://picsum.photos/id/96/500/700&quot;,&quot;https://picsum.photos/id/98/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/81/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile stress 8 — 16 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/99/500/700&quot;,&quot;https://picsum.photos/id/100/500/700&quot;,&quot;https://picsum.photos/id/101/500/700&quot;,&quot;https://picsum.photos/id/0/500/700&quot;,&quot;https://picsum.photos/id/1/500/700&quot;,&quot;https://picsum.photos/id/2/500/700&quot;,&quot;https://picsum.photos/id/3/500/700&quot;,&quot;https://picsum.photos/id/4/500/700&quot;,&quot;https://picsum.photos/id/5/500/700&quot;,&quot;https://picsum.photos/id/6/500/700&quot;,&quot;https://picsum.photos/id/7/500/700&quot;,&quot;https://picsum.photos/id/8/500/700&quot;,&quot;https://picsum.photos/id/9/500/700&quot;,&quot;https://picsum.photos/id/10/500/700&quot;,&quot;https://picsum.photos/id/11/500/700&quot;,&quot;https://picsum.photos/id/12/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/99/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile stress 9 — 16 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/13/500/700&quot;,&quot;https://picsum.photos/id/14/500/700&quot;,&quot;https://picsum.photos/id/15/500/700&quot;,&quot;https://picsum.photos/id/16/500/700&quot;,&quot;https://picsum.photos/id/17/500/700&quot;,&quot;https://picsum.photos/id/18/500/700&quot;,&quot;https://picsum.photos/id/19/500/700&quot;,&quot;https://picsum.photos/id/20/500/700&quot;,&quot;https://picsum.photos/id/21/500/700&quot;,&quot;https://picsum.photos/id/22/500/700&quot;,&quot;https://picsum.photos/id/23/500/700&quot;,&quot;https://picsum.photos/id/24/500/700&quot;,&quot;https://picsum.photos/id/25/500/700&quot;,&quot;https://picsum.photos/id/26/500/700&quot;,&quot;https://picsum.photos/id/27/500/700&quot;,&quot;https://picsum.photos/id/28/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/13/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+
+    <article class="stress-tile product-tile">
+      <p class="stress-tile__label">Tuile stress 10 — 16 image(s)</p>
+      <div class="js-slider-wrapper slider-wrapper" data-slides="[&quot;https://picsum.photos/id/29/500/700&quot;,&quot;https://picsum.photos/id/30/500/700&quot;,&quot;https://picsum.photos/id/31/500/700&quot;,&quot;https://picsum.photos/id/32/500/700&quot;,&quot;https://picsum.photos/id/33/500/700&quot;,&quot;https://picsum.photos/id/34/500/700&quot;,&quot;https://picsum.photos/id/35/500/700&quot;,&quot;https://picsum.photos/id/36/500/700&quot;,&quot;https://picsum.photos/id/37/500/700&quot;,&quot;https://picsum.photos/id/38/500/700&quot;,&quot;https://picsum.photos/id/39/500/700&quot;,&quot;https://picsum.photos/id/40/500/700&quot;,&quot;https://picsum.photos/id/41/500/700&quot;,&quot;https://picsum.photos/id/42/500/700&quot;,&quot;https://picsum.photos/id/43/500/700&quot;,&quot;https://picsum.photos/id/44/500/700&quot;]">
+        <div class="js-next nav next">next</div>
+        <div class="js-prev nav prev">prev</div>
+        <div class="js-slider slider">
+          <img class="item" src="https://picsum.photos/id/29/500/700" alt="" loading="lazy" decoding="async" width="500" height="700" />
+        </div>
+        <div class="js-indicators indicators">
+          <div class="js-indicator indicator"></div>
+        </div>
+      </div>
+    </article>
+  
+      <!-- stress-grid:end -->
     </main>
 
     <script src="src/bootstrap.js" type="module" defer></script>
-    <script src="src/stress-data.js" type="module" defer></script>
   </body>
 </html>

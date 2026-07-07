@@ -1,8 +1,12 @@
 {
   "name": "instagram-slider-with-video",
   "version": "1.0.0",
+  "type": "module",
   "description": "Vanilla JS PLP slider: bootstrap + lazy chunk on viewport/interaction, event delegation via vanilla-delegate, lit-html rendering, GPU-friendly transforms.",
   "scripts": {
+    "generate:stress-grid": "node scripts/generate-stress-grid.mjs",
+    "prebuild": "npm run generate:stress-grid",
+    "prestart": "npm run generate:stress-grid",
     "start": "parcel stress.html --open",
     "start:simple": "parcel index.html --open",
     "build": "parcel build stress.html index.html"

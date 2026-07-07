@@ -19,10 +19,7 @@ function createTileMarkup(slides, label) {
   `;
 }
 
-function renderStressGrid() {
-  const grid = document.getElementById("js-stress-grid");
-  if (!grid) return;
-
+export function buildStressGridHtml() {
   const tiles = [];
   let offset = 0;
 
@@ -48,15 +45,5 @@ function renderStressGrid() {
     offset += 16;
   }
 
-  grid.innerHTML = tiles.join("");
-
-  document.dispatchEvent(
-    new CustomEvent("sliders:observe", { detail: { root: grid } })
-  );
-}
-
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", renderStressGrid);
-} else {
-  renderStressGrid();
+  return tiles.join("\n");
 }
