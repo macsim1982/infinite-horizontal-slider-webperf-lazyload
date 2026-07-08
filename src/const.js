@@ -1,3 +1,4 @@
+export const BASE_URL = "https://picsum.photos/id/";
 export const IMG_WIDTH = 500;
 export const IMG_HEIGHT = 700;
 export const IMG_LAZY_ATTRS =

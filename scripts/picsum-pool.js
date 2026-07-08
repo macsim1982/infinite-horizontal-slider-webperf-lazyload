@@ -11,7 +11,7 @@ export const PICSUM_IDS = [
 ];
 
 export function imageUrl(id, w = IMG_WIDTH, h = IMG_HEIGHT) {
-  return `https://picsum.photos/id/${id}/${w}/${h}`;
+  return `${id}/${w}/${h}.webp`;
 }
 
 export function buildSlides(count, offset = 0) {
