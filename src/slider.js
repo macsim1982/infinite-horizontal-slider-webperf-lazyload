@@ -1,10 +1,10 @@
 import { render } from "lit-html";
 import { repeat } from "lit-html/directives/repeat";
-import { onTouchSwipe } from "vanilla-touchswipe";
 import { multiply, translateX, fromString, toString } from "rematrix";
 import { tplSlide } from "./templates.js";
+import { registerInstance } from "./delegation.js";
 
-let sliderObserver;
+export { setupDelegation, resetDelegation } from "./delegation.js";
 
 class Slider {
   constructor($wrapper, props) {
@@ -13,9 +13,7 @@ class Slider {
     this.$el = $wrapper.querySelector(".js-slider");
     this.$indicators = $wrapper.querySelector(".js-indicators");
     this.$indicator = $wrapper.querySelector(".js-indicator");
-    this.$elNext = $wrapper.querySelector(".js-next");
-    this.$elPrev = $wrapper.querySelector(".js-prev");
-    this.delta = 1; // Be careful if this is change - update css .slide:nth-child(n) if delta = 2  we will have 5 slides in dom instead of 3
+    this.delta = 1;
     this.maxSlidesInDom = this.delta * 2 + 1;
     this.originalSlides = props.slides;
 
@@ -25,8 +23,6 @@ class Slider {
     this.slides = this.getSlides(this.originalSlides);
     this.current = this.setRealCurrent(0);
     this.slidesInDom = this.getSlidesInDom(this.current);
-
-    this.bindEvents();
   }
 
   gotoPrev() {
@@ -38,19 +34,14 @@ class Slider {
   }
 
   getSlides(slides) {
-    while (slides.length < this.maxSlidesInDom) {
-      slides = slides.concat(slides);
+    const expanded = [...slides];
+    while (expanded.length < this.maxSlidesInDom) {
+      expanded.push(...slides);
     }
-    return slides.map((e, index) => ({ src: e, index: index }));
+    return expanded.map((src, index) => ({ src, index }));
   }
 
   getSlidesInDom(start = 0) {
-    console.log(
-      "getSlidesInDom",
-      this.current,
-      this.delta,
-      this.maxSlidesInDom
-    );
     const rest = this.maxSlidesInDom - (this.slides.length - start);
     let slides = this.slides.slice(start, this.maxSlidesInDom + start);
     if (rest > 0) {
@@ -103,61 +94,26 @@ class Slider {
 
   touchStart() {
     this.matrix = new Map();
-    [...this.$el.querySelectorAll(".item")].forEach($el => {
+    [...this.$el.querySelectorAll(".item")].forEach(($el) => {
       this.matrix.set($el, fromString(getComputedStyle($el).transform));
     });
   }
 
   touchMove(delta) {
-    [...this.$el.querySelectorAll(".item")].forEach($el => {
+    [...this.$el.querySelectorAll(".item")].forEach(($el) => {
       if (this.matrix.get($el)) {
-        const matrix = [this.matrix.get($el), translateX(delta)].reduce(multiply);
+        const matrix = [this.matrix.get($el), translateX(delta)].reduce(
+          multiply
+        );
         $el.style.transform = toString(matrix);
         $el.style.transition = "none";
       }
     });
   }
-
-  bindEvents() {
-    this.$elNext.addEventListener("click", this.gotoNext.bind(this));
-    this.$elPrev.addEventListener("click", this.gotoPrev.bind(this));
-
-    onTouchSwipe(this.$wrapper, {
-      left: this.gotoPrev.bind(this),
-      right: this.gotoNext.bind(this),
-      start: this.touchStart.bind(this),
-      move: this.touchMove.bind(this),
-      end: this.touchCancel.bind(this),
-      cancel: this.touchCancel.bind(this),
-    });
-  }
 }
 
-export function sliderInit($wrapper = document) {
-  sliderObserver && sliderObserver.disconnect();
-
-  sliderObserver = new IntersectionObserver(
-    (entries, observer) => {
-      for (let entry of entries) {
-        if (entry.intersectionRatio > 0) {
-          new Slider(entry.target, {
-            slides: JSON.parse(entry.target.dataset.slides),
-          });
-          observer.unobserve(entry.target);
-
-          console.log("observe this entry", entry);
-        }
-      }
-    },
-    { rootMargin: "0px 0px 0px 0px", threshold: 0 }
-  );
-
-  const $sliders = $wrapper.querySelectorAll(".js-slider-wrapper");
-  if ($sliders.length) {
-      [...$sliders].forEach($slider => {
-        sliderObserver.observe($slider);
-      });
-  } else {
-    console.warn("warn [touch-slider]", "missing element");
-  }
+export function createSlider($wrapper, props) {
+  const slider = new Slider($wrapper, props);
+  registerInstance($wrapper, slider);
+  return slider;
 }
