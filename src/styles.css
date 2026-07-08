@@ -10,6 +10,7 @@ body {
   top: 0;
   bottom: 0;
   width: 20%;
+  cursor: pointer;
 
   /* Hide the text. */
   text-indent: 100%;
@@ -52,6 +53,7 @@ body {
   position: relative;
   overflow: hidden;
   margin: 20px;
+  cursor: grab;
 
   /* No selectable text */
   -webkit-touch-callout: none; /* iOS Safari */

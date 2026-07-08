@@ -1,4 +1,4 @@
-import { IMG_LAZY_ATTRS } from "../src/const.js";
+import { BASE_URL, IMG_LAZY_ATTRS } from "../src/const.js";
 import { buildSlides } from "./picsum-pool.js";
 
 function createTileMarkup(slides, label) {
@@ -10,7 +10,7 @@ function createTileMarkup(slides, label) {
         <div class="js-next nav next">next</div>
         <div class="js-prev nav prev">prev</div>
         <div class="js-slider slider">
-          <img class="item" src="${slides[0]}" alt="" ${IMG_LAZY_ATTRS} />
+          <img class="item" src="${BASE_URL}${slides[0]}" alt="" ${IMG_LAZY_ATTRS} />
         </div>
         <div class="js-indicators indicators">
           <div class="js-indicator indicator"></div>
@@ -24,6 +24,11 @@ export function buildStressGridHtml() {
   const tiles = [];
   let offset = 0;
 
+  tiles.push(
+    createTileMarkup(buildSlides(100, offset), `Tuile large slider`)
+  );
+  offset += 100;
+  
   for (let i = 0; i < 10; i++) {
     tiles.push(
       createTileMarkup(buildSlides(16, offset), `Tuile stress ${i + 1}`)
