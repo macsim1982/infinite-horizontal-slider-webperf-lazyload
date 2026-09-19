@@ -1,3 +1,5 @@
+import { canCreateSlider } from "./slides.js";
+
 const SELECTOR = ".js-slider-wrapper";
 const READY_ATTR = "data-slider-ready";
 const HOVER_BOUND_ATTR = "data-hover-bound";
@@ -50,7 +52,7 @@ async function activateWrapper($wrapper) {
     }
   }
 
-  if (slides) {
+  if (canCreateSlider(slides)) {
     const { createSlider, setupDelegation } = await loadSliderModule();
 
     setupDelegation();

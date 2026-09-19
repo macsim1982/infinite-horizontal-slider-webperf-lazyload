@@ -3,8 +3,10 @@ import { repeat } from "lit-html/directives/repeat";
 import { multiply, translateX, fromString, toString } from "rematrix";
 import { tplSlide } from "./templates.js";
 import { registerInstance } from "./delegation.js";
+import { expandSlides } from "./slides.js";
 
 export { setupDelegation, resetDelegation } from "./delegation.js";
+export { expandSlides, canCreateSlider } from "./slides.js";
 
 class Slider {
   constructor($wrapper, props) {
@@ -15,14 +17,17 @@ class Slider {
     this.$indicator = $wrapper.querySelector(".js-indicator");
     this.delta = 1;
     this.maxSlidesInDom = this.delta * 2 + 1;
-    this.originalSlides = props.slides;
+    this.originalSlides = Array.isArray(props.slides) ? props.slides : [];
 
-    this.indicatorsWidth = this.$indicators.offsetWidth;
-    this.indicatorWidth = this.$indicator.offsetWidth;
+    this.indicatorsWidth = this.$indicators?.offsetWidth || 0;
+    this.indicatorWidth = this.$indicator?.offsetWidth || 0;
 
     this.slides = this.getSlides(this.originalSlides);
-    this.current = this.setRealCurrent(0);
-    this.slidesInDom = this.getSlidesInDom(this.current);
+    this.current = this.slides.length ? this.setRealCurrent(0) : 0;
+    this.slidesInDom = [];
+    if (this.slides.length) {
+      this.getSlidesInDom(this.current);
+    }
   }
 
   gotoPrev() {
@@ -34,11 +39,7 @@ class Slider {
   }
 
   getSlides(slides) {
-    const expanded = [...slides];
-    while (expanded.length < this.maxSlidesInDom) {
-      expanded.push(...slides);
-    }
-    return expanded.map((src, index) => ({ src, index }));
+    return expandSlides(slides, this.maxSlidesInDom);
   }
 
   getSlidesInDom(start = 0) {
@@ -49,12 +50,16 @@ class Slider {
     }
     this.slidesInDom = slides;
 
+    const lastIndex = this.originalSlides.length - 1;
     const indicatorLeft =
-      ((this.indicatorsWidth - this.indicatorWidth) /
-        (this.originalSlides.length - 1)) *
-      this.getCurrentIndex();
+      lastIndex > 0
+        ? ((this.indicatorsWidth - this.indicatorWidth) / lastIndex) *
+          this.getCurrentIndex()
+        : 0;
 
-    this.$indicator.style.transform = "translateX(" + indicatorLeft + "px)";
+    if (this.$indicator) {
+      this.$indicator.style.transform = "translateX(" + indicatorLeft + "px)";
+    }
     render(
       repeat(this.slidesInDom, (i) => i.index, tplSlide),
       this.$el
@@ -62,7 +67,11 @@ class Slider {
   }
 
   getCurrentIndex() {
-    return (this.current + this.delta) % this.originalSlides.length;
+    const len = this.originalSlides.length;
+    if (!len) {
+      return 0;
+    }
+    return (this.current + this.delta) % len;
   }
 
   setCurrent(val) {

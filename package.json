@@ -8,7 +8,8 @@
     "prebuild": "npm run generate:stress-grid",
     "prestart": "npm run generate:stress-grid",
     "start": "parcel index.html --open",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html",
+    "test": "node --test tests/slides.test.js"
   },
   "dependencies": {
     "lit-html": "1.4.1",
