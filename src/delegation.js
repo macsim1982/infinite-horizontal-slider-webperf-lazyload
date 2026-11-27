@@ -1,19 +1,13 @@
 import { delegate } from "vanilla-delegate";
+import { createDragSession, pointFromEvent } from "./pointer-session.js";
+
 const instances = new WeakMap();
+const dragSession = createDragSession();
 
 let delegationReady = false;
 let clickDelegation = null;
 let touchDelegation = null;
-
-let activeWrapper = null;
-let startX = 0;
-let startY = 0;
-let endX = 0;
-let endY = 0;
-let pressed = false;
-
-const MIN_X = 30;
-const MAX_Y = 60;
+let documentDragBound = false;
 
 export function registerInstance($wrapper, slider) {
   instances.set($wrapper, slider);
@@ -23,103 +17,91 @@ export function getInstance($wrapper) {
   return instances.get($wrapper);
 }
 
-function touchOrMouseEvent(e) {
-  return "touches" in e ? e.touches?.[0] : e;
-}
-
 function getWrapperFromEvent(e) {
-  return e.target.closest(".js-slider-wrapper");
+  return e.target?.closest?.(".js-slider-wrapper") || null;
 }
 
-function handleSwipe(slider) {
-  const isHorizontalSwipe = Math.abs(endX - startX) > Math.abs(endY - startY);
-  const isSwipeLeft = endX > startX + MIN_X;
-  const isSwipeRight = endX < startX - MIN_X;
+function applyDragResult(result) {
+  if (!result) {
+    return;
+  }
 
-  if (
-    isHorizontalSwipe &&
-    (isSwipeLeft || isSwipeRight) &&
-    endY > startY - MAX_Y &&
-    endY < startY + MAX_Y
-  ) {
-    if (endX > startX) {
-      slider.gotoPrev();
-    } else {
-      slider.gotoNext();
-    }
+  const slider = instances.get(result.wrapper);
+  unbindDocumentDrag();
+
+  if (!slider) {
+    return;
+  }
+
+  if (result.action === "prev") {
+    slider.gotoPrev();
+  } else if (result.action === "next") {
+    slider.gotoNext();
   } else {
     slider.touchCancel();
   }
 }
 
 function onPointerStart(e) {
+  if (dragSession.getState().pressed) {
+    return;
+  }
+
   const wrapper = getWrapperFromEvent(e);
   const slider = wrapper ? instances.get(wrapper) : null;
-  const touch = slider ? touchOrMouseEvent(e) : null;
+  const point = slider ? pointFromEvent(e) : null;
 
-  if (wrapper && slider && touch) {
-    activeWrapper = wrapper;
-    startX = touch.screenX;
-    startY = touch.screenY;
-    endX = startX;
-    endY = startY;
-    pressed = true;
+  if (dragSession.start(wrapper, point)) {
     slider.touchStart();
+    bindDocumentDrag();
   }
 }
 
 function onPointerMove(e) {
-  const wrapper = getWrapperFromEvent(e) || activeWrapper;
-  const slider =
-    pressed &&
-    activeWrapper &&
-    wrapper === activeWrapper
-      ? instances.get(activeWrapper)
-      : null;
-  const touch = slider ? touchOrMouseEvent(e) : null;
-
-  if (touch) {
-    endX = touch.screenX;
-    endY = touch.screenY;
-    slider.touchMove(endX - startX);
+  const delta = dragSession.move(pointFromEvent(e));
+  if (delta === null) {
+    return;
   }
+
+  const { activeWrapper } = dragSession.getState();
+  const slider = activeWrapper ? instances.get(activeWrapper) : null;
+  slider?.touchMove(delta);
 }
 
 function onPointerEnd(e) {
-  const canHandle = pressed && activeWrapper;
-  const slider = canHandle ? instances.get(activeWrapper) : null;
-  const touch = slider ? touchOrMouseEvent(e) : null;
-
-  if (slider) {
-    if (touch) {
-      endX = touch.screenX;
-      endY = touch.screenY;
-    }
-
-    handleSwipe(slider);
-
-    pressed = false;
-    activeWrapper = null;
-    startX = 0;
-    startY = 0;
-    endX = 0;
-    endY = 0;
-  }
+  applyDragResult(dragSession.end(pointFromEvent(e)));
 }
 
 function onPointerCancel() {
-  const slider = pressed && activeWrapper ? instances.get(activeWrapper) : null;
+  applyDragResult(dragSession.cancel());
+}
 
-  if (slider) {
-    slider.touchCancel();
-
-    pressed = false;
-    activeWrapper = null;
-    startX = 0;
-    startY = 0;
-    endX = 0;
-    endY = 0;
+function bindDocumentDrag() {
+  if (documentDragBound) {
+    return;
   }
+
+  documentDragBound = true;
+  document.addEventListener("mousemove", onPointerMove);
+  document.addEventListener("touchmove", onPointerMove, { passive: true });
+  document.addEventListener("mouseup", onPointerEnd, true);
+  document.addEventListener("touchend", onPointerEnd, true);
+  document.addEventListener("touchcancel", onPointerCancel, true);
+  window.addEventListener("blur", onPointerCancel);
+}
+
+function unbindDocumentDrag() {
+  if (!documentDragBound) {
+    return;
+  }
+
+  documentDragBound = false;
+  document.removeEventListener("mousemove", onPointerMove);
+  document.removeEventListener("touchmove", onPointerMove);
+  document.removeEventListener("mouseup", onPointerEnd, true);
+  document.removeEventListener("touchend", onPointerEnd, true);
+  document.removeEventListener("touchcancel", onPointerCancel, true);
+  window.removeEventListener("blur", onPointerCancel);
 }
 
 export function setupDelegation() {
@@ -145,21 +127,14 @@ export function setupDelegation() {
       }
     );
 
+    // Start only: move/end must be document-level. mouseup whose target is
+    // another tile never matches `.js-slider-wrapper`, and mouseleave does
+    // not bubble so a body delegate never sees it — that left `pressed` stuck.
     touchDelegation = delegate(
       document.body,
       ".js-slider-wrapper",
-      "touchstart,touchmove,touchend,touchcancel,mousedown,mousemove,mouseup,mouseleave",
-      (e) => {
-        if (e.type === "touchstart" || e.type === "mousedown") {
-          onPointerStart(e);
-        } else if (e.type === "touchmove" || e.type === "mousemove") {
-          onPointerMove(e);
-        } else if (e.type === "touchend" || e.type === "mouseup") {
-          onPointerEnd(e);
-        } else if (e.type === "touchcancel" || e.type === "mouseleave") {
-          onPointerCancel();
-        }
-      }
+      "touchstart,mousedown",
+      onPointerStart
     );
   }
 }
@@ -170,6 +145,6 @@ export function resetDelegation() {
   clickDelegation = null;
   touchDelegation = null;
   delegationReady = false;
-  pressed = false;
-  activeWrapper = null;
+  unbindDocumentDrag();
+  dragSession.cancel();
 }
